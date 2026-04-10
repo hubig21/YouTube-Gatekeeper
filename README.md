@@ -1,37 +1,186 @@
-# YouTube Gatekeeper v0.1.0 (Stable)
+# YouTube 頻道過濾器
 
-**YouTube 守門員** is a Tampermonkey userscript designed to enhance your YouTube experience by allowing you to block or whitelist channels, filter videos by duration, and manage content with a user-friendly tabbed interface. This stable release (`v0.1.0`) introduces the core functionality with optimized performance.
-
-## Features
-- **Channel Management**: Block or whitelist YouTube channels with dedicated buttons next to video items.
-- **Keyword Filtering**: Block videos based on specific keywords in their titles.
-- **Video Duration Filter**: Hide videos shorter than a user-defined duration (default: 30 seconds).
-- **Whitelist Mode**: Optionally display only whitelisted channels.
-- **Export/Import**: Save and load your blocked/whitelisted channels and keywords as JSON files.
-- **Responsive UI**: A modern, tabbed management interface for easy configuration.
-
-## Changelog
-- **Button Display Optimization**: Expanded DOM selectors to support more YouTube page structures, including `yt-lockup-view-model` and `ytd-rich-item-renderer` variants.
-- **Channel Identification Fallback**: Uses channel name as a fallback identifier when `channelId` is unavailable for blocking/whitelisting.
-- **UI Improvements**: Enhanced version information display in the management UI.
-
-## Installation
-1. Install a userscript manager like [Tampermonkey](https://www.tampermonkey.net/).
-2. Download the script from the [release assets](#) or install directly via [GreasyFork](https://greasyfork.org/scripts/547729).
-3. The script runs automatically on YouTube (`https://www.youtube.com/*`).
-
-## Usage
-- Click the **內容管理** (Content Management) button in the YouTube masthead to open the management UI.
-- Use the tabs to manage blocked/whitelisted channels, keywords, or view version info.
-- Block or whitelist channels directly from video items using the **封鎖** (Block) or **白名單** (Whitelist) buttons.
-
-## License
-This script is licensed under the [MIT License](LICENSE).
-
-## Feedback
-Report issues or suggest improvements on the [GitHub Issues page](https://github.com/[YourUsername]/YouTube-Gatekeeper/issues).
+**強大的 YouTube 影片過濾工具 — 隱藏頻道、關鍵字過濾、時長/語言/直播/會員內容過濾，一站式管理。**
 
 ---
-**Author**: MayoHu  
-**Download**: [YouTube 守門員 穩定版-0.1-optimized.user.js](https://update.greasyfork.org/scripts/547729/YouTube%20%E5%AE%88%E9%96%80%E5%93%A1.user.js)  
-**Support**: For updates, check [GreasyFork](https://greasyfork.org/scripts/547729) or the [GitHub repository](https://github.com/[YourUsername]/YouTube-Gatekeeper).
+
+## ✨ 功能特色
+
+### 🚫 頻道隱藏名單
+- 將頻道加入隱藏名單，其所有影片在任何頁面都不再顯示
+- 單筆移除帶內嵌確認列（不使用瀏覽器彈窗，完全相容 CSP）
+- 一鍵清空全部
+- **標籤分類**：為每個隱藏頻道自訂標籤（如「新聞」「遊戲」），並可在管理介面按標籤篩選
+
+### ⭐ 白名單
+- 白名單頻道享有**最高優先保護**，任何過濾規則（包含直播/會員/語言）都不會隱藏它們
+- 單筆移除含確認
+- 一鍵清空全部
+
+### 🔤 關鍵字過濾
+- 建立多個關鍵字群組，各自可獨立開啟或關閉
+- 套用範圍選擇：影片**標題**和/或**描述**
+- 支援一般文字比對與**正規表達式（Regex）**
+- 範例 Regex：`^\[業配\]` 可過濾所有「[業配]」開頭的影片
+
+### ⚙️ 進階過濾
+- **影片時長**：隱藏過短或過長的影片（設定最短/最長秒數）
+- **直播中**：隱藏正在直播的影片
+- **即將首播**：隱藏已排程的首播影片
+- **會員專屬**：隱藏需要付費會員才能觀看的影片
+- **語言過濾**：根據標題字元集自動偵測語言，支援 16 種預設語言 + 自訂 BCP-47 代碼
+- **白名單獨享模式**：只顯示白名單內的頻道，其餘全部隱藏
+
+### 📊 統計與歷史
+- 累計隱藏影片總數，關鍵字與頻道命中次數橫條圖排行
+- 最近 500 筆隱藏記錄，含時間戳與過濾原因
+- 一鍵重置統計
+
+### 💾 匯出 / 匯入
+- 完整設定 JSON 備份與還原（合併或覆蓋模式）
+- 隱藏名單、白名單、關鍵字群組 CSV 格式匯出/匯入
+- **分享過濾清單**：產生分享連結，讓他人直接匯入你的設定
+
+### 🖱️ 快速操作按鈕
+- **首頁 / 搜尋 / 訂閱頁**：滑鼠移到影片卡片 → 縮圖底部滑出半透明操作列，含 🚫 隱藏頻道 / ⭐ 加入白名單
+- **影片頁面側邊推薦**：滑鼠移到卡片 → 縮圖右上角出現小圓形 🚫 / ⭐ 圖示
+- **頻道頁面**：在頻道 header 顯示「🚫 隱藏此頻道 / ⭐ 加入白名單」按鈕列
+
+### 🔘 頂欄按鈕
+- 注入於 YouTube 頂欄頭像旁邊
+- **左鍵**：開啟 / 關閉管理面板
+- **右鍵**：切換過濾器開關（暫停 / 繼續）
+
+### ⏰ 自動備份
+- 可設定備份間隔（每天到每月），自動下載 JSON 備份檔
+- 可選備份檔名前綴（如 `mybackup` → `mybackup-20250410.json`）
+- 不填前綴則固定覆蓋同一個 `yt-filter-backup.json`
+
+---
+
+## 🚀 安裝方式
+
+1. 安裝瀏覽器擴充 [Tampermonkey](https://www.tampermonkey.net/)（Firefox / Chrome / Edge 皆支援）
+2. 點擊本頁的**安裝**按鈕
+3. 開啟 [YouTube](https://www.youtube.com/)，頂欄頭像旁邊會出現 🔍 按鈕
+4. 點擊 🔍 開啟管理面板
+
+---
+
+## 📖 使用說明
+
+### 新增頻道到隱藏名單
+
+**方法 A — 管理面板**
+1. 點擊頂欄 🔍 → 開啟面板 → **🚫 隱藏名單** Tab
+2. 點擊 **＋ 新增** → 輸入頻道名稱或 @handle → 點擊「確認新增」
+
+**方法 B — 快速按鈕（最快）**
+- 在首頁或側邊，將滑鼠移到任何影片卡片上
+- 縮圖上出現 🚫 按鈕後點擊，即立即加入隱藏名單
+
+**方法 C — 頻道頁面**
+- 前往該頻道的 YouTube 頁面
+- 在頻道 header 點擊「🚫 隱藏此頻道」
+
+### 從隱藏名單移除
+- 開啟 **🚫 隱藏名單** Tab → 點擊頻道名稱旁的 **✕**
+- 同一列會展開確認列 → 點「確認移除」即完成
+
+### 頻道標籤管理
+- 在隱藏名單的每個頻道列，點擊 🏷 按鈕可展開標籤輸入欄
+- 輸入標籤名稱後按 Enter 或點「＋」新增
+- 輸入框有已存在標籤的自動建議（datalist）
+- 點擊標籤 chip 上的 × 可移除單一標籤
+- 頁面頂部的標籤篩選器（chip 列）可快速篩選特定分類的頻道
+
+### 關鍵字過濾設定
+1. 開啟面板 → **🔤 關鍵字** Tab
+2. 點擊「＋ 新增群組」→ 輸入群組名稱 → 設定套用範圍（標題 / 描述）→ 點「建立」
+3. 在群組上點擊「＋ 關鍵字」→ 輸入關鍵字或 Regex → 按 Enter 或「新增」
+4. 群組左側的開關可臨時停用整個群組，方便測試
+
+**Regex 範例：**
+| 用途 | Regex |
+|------|-------|
+| 過濾標題開頭為「業配」 | `^\[業配\]` |
+| 過濾含「開箱」的影片 | `開箱` |
+| 過濾超過 10 分鐘的標題中含有「挑戰」 | `挑戰` |
+| 過濾英文大寫開頭的業配標記 | `^\[SPONSORED\]` |
+
+### 語言過濾設定
+1. 開啟面板 → **⚙️ 過濾** Tab → 開啟「🌐 語言過濾」
+2. 選擇模式：**過濾指定語言**（隱藏）或 **只顯示指定語言**（白名單）
+3. 勾選預設語言，或在「自訂語言代碼」欄輸入（逗號分隔，如 `th, vi, id`）
+4. 點擊「🔗 BCP-47 語言代碼參考」可開啟語言代碼查詢工具
+5. 點擊「💾 儲存設定」套用
+
+**語言偵測方式（根據標題字元集）：**
+| 語言 | 偵測規則 |
+|------|---------|
+| 日文 | 含平假名或片假名 |
+| 韓文 | 含韓文字元 |
+| 中文 | 含中文字元 |
+| 俄文 | 含西里爾字元 |
+| 阿拉伯文 | 含阿拉伯字元 |
+| 英文 | 其他（預設） |
+
+> **注意**：語言偵測基於字元集，精準度受標題語言混合程度影響。
+
+### 匯出與備份
+
+| 操作 | 位置 |
+|------|------|
+| 匯出完整設定 JSON | 面板 → 💾 匯出入 → 完整設定 JSON |
+| 匯出隱藏名單 CSV | 面板 → 💾 匯出入 → 隱藏名單 CSV |
+| 立即手動備份 | Tampermonkey 選單 → 💾 立即備份設定 |
+
+### 分享過濾清單
+
+1. 面板 → **💾 匯出入** Tab → 「🔗 分享過濾清單」區塊
+2. 選擇分享範圍：隱藏名單 / 白名單 / 關鍵字群組 / 全部
+3. 複製產生的 YouTube 連結，傳送給對方
+4. 對方在瀏覽器開啟此連結，腳本會自動偵測並在面板頂部顯示「📥 有待匯入的分享清單」
+5. 點擊「匯入此清單」即合併到對方的設定中
+
+---
+
+## ⚠️ 注意事項
+
+- 需搭配 **Tampermonkey** 使用（Firefox / Chrome / Edge / Safari 皆支援）。Violentmonkey 可能也相容。
+- YouTube 持續更新 HTML 結構，若快速按鈕消失，請回報問題。
+- 腳本完全相容 YouTube 的 CSP（內容安全政策），不使用 `innerHTML`，安全性有保障。
+- 所有資料皆儲存在本機（Tampermonkey 的 `GM_setValue`），不會傳送到任何伺服器。
+
+---
+
+## 🔧 過濾優先順序
+
+多個規則同時啟用時，依以下順序判斷：
+
+| 順序 | 規則 | 白名單可保護？ |
+|------|------|-------------|
+| 1 | **白名單**（最高優先，完全保護） | — |
+| 2 | 頻道隱藏名單 | ✅ |
+| 3 | 關鍵字群組 | ✅ |
+| 4 | 直播 / 首播 / 會員 / 時長 | ✅ |
+| 5 | 語言過濾 | ✅ |
+
+---
+
+## 📋 版本記錄
+
+### v1.0.0（正式發布）
+- 頻道隱藏名單（含標籤分類、標籤篩選器）
+- 白名單（最高優先保護）
+- 關鍵字群組（文字 + Regex，標題/描述範圍）
+- 進階過濾：時長、直播、首播、會員、語言（16 種預設 + 自訂 BCP-47）
+- 白名單獨享模式
+- 統計橫條圖排行、歷史記錄（500 筆）
+- JSON / CSV 完整匯出入
+- 分享過濾清單（URL 分享）
+- 自動備份（可設前綴與間隔）
+- 頂欄按鈕（左鍵開面板，右鍵切換開關）
+- 快速操作按鈕（首頁底部 bar、側邊推薦圓形圖示）
+- 頻道頁快速操作列
+- 零 innerHTML，CSP 完全相容
