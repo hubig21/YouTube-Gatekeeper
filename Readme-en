@@ -1,0 +1,151 @@
+# YouTube Channel Filter
+
+**Powerful YouTube video filter — block channels, filter by keyword, duration, language, live streams and members-only content.**
+
+---
+
+## ✨ Features
+
+### 🚫 Channel Blocklist
+- Add channels to a blocklist to hide all their videos across every page
+- Individual channel removal with inline confirmation (no popup dialogs)
+- Bulk clear all
+- **Tag system**: assign custom tags (e.g. "News", "Gaming") to organize blocked channels, with tag-based filtering in the management panel
+
+### ⭐ Whitelist
+- Whitelist channels are **completely protected** — no filter rule of any kind will hide them
+- Individual removal with confirmation
+- Bulk clear all
+
+### 🔤 Keyword Filters
+- Create multiple keyword groups, each with its own enable/disable toggle
+- Match against video **title** and/or **description**
+- Supports plain text and **Regular Expressions** (Regex)
+- Example regex: `^\[AD\]` hides all videos whose title starts with "[AD]"
+
+### ⚙️ Advanced Filters
+- **Video duration**: hide videos shorter/longer than specified seconds
+- **Live streams**: hide currently live videos
+- **Upcoming premieres**: hide scheduled premiere videos
+- **Members-only**: hide videos behind a paid membership
+- **Language filter**: auto-detect language from title characters; supports 16 preset languages + custom BCP-47 codes
+- **Whitelist-only mode**: show only whitelisted channels, hide everything else
+
+### 📊 Statistics & History
+- Total hidden video count with keyword and channel hit rankings (bar chart)
+- History log of up to 500 hidden videos with timestamp and filter reason
+- One-click reset
+
+### 💾 Export / Import
+- Full settings JSON backup/restore (merge or overwrite mode)
+- Blocklist, whitelist, keyword CSV export/import
+- **Share filter lists**: generate a URL to share your blocklist/whitelist/keywords with others; recipients are prompted to import on first visit
+
+### 🖱️ Quick Action Buttons
+- **Homepage / Search / Subscriptions**: hover over any video card → a translucent action bar slides up from the bottom of the thumbnail with 🚫 / ⭐ buttons
+- **Sidebar recommendations** (watch page): hover over a card → small circular 🚫 / ⭐ icons appear in the top-right corner of the thumbnail
+- **Channel pages**: a "Block this channel / Add to whitelist" button bar appears in the channel header
+
+### 🔘 Top Bar Button
+- Injected next to the YouTube avatar button
+- **Left-click**: open/close management panel
+- **Right-click**: toggle filter on/off (pause/resume)
+
+### ⏰ Auto Backup
+- Automatically exports a backup JSON on a configurable schedule (daily to monthly)
+- Optional filename prefix (e.g. `mybackup` → `mybackup-20250410.json`)
+- Without a prefix, always overwrites `yt-filter-backup.json` — ideal for a fixed backup slot
+
+---
+
+## 🚀 Installation
+
+1. Install [Tampermonkey](https://www.tampermonkey.net/) for your browser
+2. Click **Install** on this page
+3. Open [YouTube](https://www.youtube.com/) — a 🔍 button will appear in the top bar next to your avatar
+4. Left-click 🔍 to open the management panel
+
+---
+
+## 📖 How to Use
+
+### Adding a channel to the blocklist
+**Method A — Panel**
+1. Click 🔍 in the top bar → open panel → **🚫 Blocklist** tab
+2. Click **＋ Add** → enter channel name or @handle → click **Confirm**
+
+**Method B — Quick button (fastest)**
+- Hover over any video card on the homepage or sidebar
+- Click the 🚫 button that appears on the thumbnail
+
+**Method C — Channel page**
+- Visit the channel's YouTube page
+- Click **🚫 Block this channel** in the channel header
+
+### Removing a channel from the blocklist
+- Open **🚫 Blocklist** tab → click **✕** next to the channel name
+- An inline confirmation row appears → click **Confirm removal**
+
+### Keyword filtering
+1. Open panel → **🔤 Keywords** tab
+2. Click **＋ New Group** → enter a group name → set scope (Title / Description) → **Create**
+3. Click **＋ Keyword** on the group → type a keyword or Regex → press **Enter** or click **Add**
+4. Toggle the group switch to enable/disable without deleting
+
+### Language filtering
+1. Open panel → **⚙️ Filters** tab → enable **🌐 Language Filter**
+2. Choose mode: **Block selected languages** or **Show only selected languages**
+3. Check the preset languages or enter custom BCP-47 codes (e.g. `th, vi, id`)
+4. Click **💾 Save Settings**
+
+### Exporting & sharing
+- **Export**: panel → **💾 Export/Import** tab → choose JSON or CSV format
+- **Share**: panel → **💾 Export/Import** → **Share Filter List** section → choose what to share → copy the generated link and send it to a friend
+
+### Keyboard shortcuts (Tampermonkey menu)
+| Action | How |
+|--------|-----|
+| Open panel | Click 🔍 in top bar, or Tampermonkey menu → ⚙️ Open Panel |
+| Toggle filter | Right-click 🔍, or Tampermonkey menu → 🔄 Toggle Filter |
+| Manual backup | Tampermonkey menu → 💾 Backup Now |
+
+---
+
+## ⚠️ Notes
+
+- Requires **Tampermonkey** (Firefox / Chrome / Edge / Safari). Violentmonkey may also work.
+- YouTube's HTML structure changes frequently; if buttons stop appearing, please report an issue.
+- The script is CSP-compatible and never uses `innerHTML` — safe to run on YouTube's strict Content Security Policy environment.
+- All data is stored locally via Tampermonkey's `GM_setValue` — no data is sent to any server.
+
+---
+
+## 🔧 Filter Priority Order
+
+When multiple rules are active, they are evaluated in this order:
+
+1. **Whitelist** (highest priority — fully protected from all filters)
+2. Blocklist
+3. Keyword groups
+4. Live / Upcoming / Members-only / Duration
+5. Language
+
+---
+
+## 📋 Changelog
+
+### v1.0.0 (Initial Release)
+- Channel blocklist with tag classification and tag-based filtering
+- Whitelist with full protection guarantee
+- Keyword groups (plain text + Regex, title/description scope)
+- Advanced filters: duration, live, upcoming, members-only, language (16 presets + custom BCP-47)
+- Whitelist-only mode
+- Statistics with bar chart rankings
+- History log (500 entries)
+- Full JSON / CSV export & import
+- Share filter lists via URL
+- Auto backup with configurable filename prefix
+- Top bar button (left-click = panel, right-click = toggle)
+- Quick action buttons on homepage cards (bottom bar) and sidebar cards (icon overlay)
+- Channel page quick block/whitelist buttons
+- CSP-compatible (zero innerHTML), Tampermonkey-safe
