@@ -1,4 +1,4 @@
-<image url="https://github.com/hubig21/YouTube-Gatekeeper/blob/main/cover.png"></image>
+<img src="https://github.com/hubig21/YouTube-Gatekeeper/blob/main/cover.png"></img>
 <div align="center" dir="auto">
 <a href="https://github.com/hubig21/YouTube-Gatekeeper/blob/main/Readme-zh">繁體中文</a> | 
 <a href="https://github.com/hubig21/YouTube-Gatekeeper/blob/main/Readme-en">English</a>
