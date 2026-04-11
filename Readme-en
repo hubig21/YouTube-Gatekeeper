@@ -1,151 +1,184 @@
-# YouTube Channel Filter
+# YouTube Channel Filter — User Guide v1.0.2
 
-**Powerful YouTube video filter — block channels, filter by keyword, duration, language, live streams and members-only content.**
-
----
-
-## ✨ Features
-
-### 🚫 Channel Blocklist
-- Add channels to a blocklist to hide all their videos across every page
-- Individual channel removal with inline confirmation (no popup dialogs)
-- Bulk clear all
-- **Tag system**: assign custom tags (e.g. "News", "Gaming") to organize blocked channels, with tag-based filtering in the management panel
-
-### ⭐ Whitelist
-- Whitelist channels are **completely protected** — no filter rule of any kind will hide them
-- Individual removal with confirmation
-- Bulk clear all
-
-### 🔤 Keyword Filters
-- Create multiple keyword groups, each with its own enable/disable toggle
-- Match against video **title** and/or **description**
-- Supports plain text and **Regular Expressions** (Regex)
-- Example regex: `^\[AD\]` hides all videos whose title starts with "[AD]"
-
-### ⚙️ Advanced Filters
-- **Video duration**: hide videos shorter/longer than specified seconds
-- **Live streams**: hide currently live videos
-- **Upcoming premieres**: hide scheduled premiere videos
-- **Members-only**: hide videos behind a paid membership
-- **Language filter**: auto-detect language from title characters; supports 16 preset languages + custom BCP-47 codes
-- **Whitelist-only mode**: show only whitelisted channels, hide everything else
-
-### 📊 Statistics & History
-- Total hidden video count with keyword and channel hit rankings (bar chart)
-- History log of up to 500 hidden videos with timestamp and filter reason
-- One-click reset
-
-### 💾 Export / Import
-- Full settings JSON backup/restore (merge or overwrite mode)
-- Blocklist, whitelist, keyword CSV export/import
-- **Share filter lists**: generate a URL to share your blocklist/whitelist/keywords with others; recipients are prompted to import on first visit
-
-### 🖱️ Quick Action Buttons
-- **Homepage / Search / Subscriptions**: hover over any video card → a translucent action bar slides up from the bottom of the thumbnail with 🚫 / ⭐ buttons
-- **Sidebar recommendations** (watch page): hover over a card → small circular 🚫 / ⭐ icons appear in the top-right corner of the thumbnail
-- **Channel pages**: a "Block this channel / Add to whitelist" button bar appears in the channel header
-
-### 🔘 Top Bar Button
-- Injected next to the YouTube avatar button
-- **Left-click**: open/close management panel
-- **Right-click**: toggle filter on/off (pause/resume)
-
-### ⏰ Auto Backup
-- Automatically exports a backup JSON on a configurable schedule (daily to monthly)
-- Optional filename prefix (e.g. `mybackup` → `mybackup-20250410.json`)
-- Without a prefix, always overwrites `yt-filter-backup.json` — ideal for a fixed backup slot
+A powerful multi-layer YouTube video filter. Block channels, filter by keyword, duration, language, live streams and members-only content.
 
 ---
 
 ## 🚀 Installation
 
-1. Install [Tampermonkey](https://www.tampermonkey.net/) for your browser
-2. Click **Install** on this page
-3. Open [YouTube](https://www.youtube.com/) — a 🔍 button will appear in the top bar next to your avatar
-4. Left-click 🔍 to open the management panel
+1. Install [Tampermonkey](https://www.tampermonkey.net/) (Firefox / Chrome / Edge)
+2. Click the script install link and confirm in Tampermonkey
+3. Refresh YouTube — the 🔍 icon appears in the top bar when active
 
 ---
 
-## 📖 How to Use
+## 🎛️ Basic Controls
 
-### Adding a channel to the blocklist
-**Method A — Panel**
-1. Click 🔍 in the top bar → open panel → **🚫 Blocklist** tab
-2. Click **＋ Add** → enter channel name or @handle → click **Confirm**
-
-**Method B — Quick button (fastest)**
-- Hover over any video card on the homepage or sidebar
-- Click the 🚫 button that appears on the thumbnail
-
-**Method C — Channel page**
-- Visit the channel's YouTube page
-- Click **🚫 Block this channel** in the channel header
-
-### Removing a channel from the blocklist
-- Open **🚫 Blocklist** tab → click **✕** next to the channel name
-- An inline confirmation row appears → click **Confirm removal**
-
-### Keyword filtering
-1. Open panel → **🔤 Keywords** tab
-2. Click **＋ New Group** → enter a group name → set scope (Title / Description) → **Create**
-3. Click **＋ Keyword** on the group → type a keyword or Regex → press **Enter** or click **Add**
-4. Toggle the group switch to enable/disable without deleting
-
-### Language filtering
-1. Open panel → **⚙️ Filters** tab → enable **🌐 Language Filter**
-2. Choose mode: **Block selected languages** or **Show only selected languages**
-3. Check the preset languages or enter custom BCP-47 codes (e.g. `th, vi, id`)
-4. Click **💾 Save Settings**
-
-### Exporting & sharing
-- **Export**: panel → **💾 Export/Import** tab → choose JSON or CSV format
-- **Share**: panel → **💾 Export/Import** → **Share Filter List** section → choose what to share → copy the generated link and send it to a friend
-
-### Keyboard shortcuts (Tampermonkey menu)
-| Action | How |
-|--------|-----|
-| Open panel | Click 🔍 in top bar, or Tampermonkey menu → ⚙️ Open Panel |
-| Toggle filter | Right-click 🔍, or Tampermonkey menu → 🔄 Toggle Filter |
-| Manual backup | Tampermonkey menu → 💾 Backup Now |
+| Action | Description |
+|--------|-------------|
+| 🔍 **Left-click** | Open / close the management panel |
+| 🔍 **Right-click** | Toggle filter on / off instantly |
+| Tampermonkey menu | Open panel or toggle filter from the extension icon |
+| **Hover over a video card** | Quick action bar slides up: 🚫 Block channel ｜ ⭐ Whitelist |
 
 ---
 
-## ⚠️ Notes
+## 🚫 Blocklist
 
-- Requires **Tampermonkey** (Firefox / Chrome / Edge / Safari). Violentmonkey may also work.
-- YouTube's HTML structure changes frequently; if buttons stop appearing, please report an issue.
-- The script is CSP-compatible and never uses `innerHTML` — safe to run on YouTube's strict Content Security Policy environment.
-- All data is stored locally via Tampermonkey's `GM_setValue` — no data is sent to any server.
+Add channels to hide in the **🚫 Blocklist** tab:
 
----
-
-## 🔧 Filter Priority Order
-
-When multiple rules are active, they are evaluated in this order:
-
-1. **Whitelist** (highest priority — fully protected from all filters)
-2. Blocklist
-3. Keyword groups
-4. Live / Upcoming / Members-only / Duration
-5. Language
+- Enter a **channel name** (e.g. `Some Channel`) or **@handle** (e.g. `@channelhandle`)
+- All videos from that channel disappear across the homepage, search results and sidebar recommendations
+- Use **tags** to organise large blocklists
+- Check **⌥R.* Regex mode** to match channel names with a Regular Expression pattern (see Regex section below)
 
 ---
 
-## 📋 Changelog
+## ⭐ Whitelist
 
-### v1.0.0 (Initial Release)
-- Channel blocklist with tag classification and tag-based filtering
-- Whitelist with full protection guarantee
-- Keyword groups (plain text + Regex, title/description scope)
-- Advanced filters: duration, live, upcoming, members-only, language (16 presets + custom BCP-47)
-- Whitelist-only mode
-- Statistics with bar chart rankings
-- History log (500 entries)
-- Full JSON / CSV export & import
-- Share filter lists via URL
-- Auto backup with configurable filename prefix
-- Top bar button (left-click = panel, right-click = toggle)
-- Quick action buttons on homepage cards (bottom bar) and sidebar cards (icon overlay)
-- Channel page quick block/whitelist buttons
-- CSP-compatible (zero innerHTML), Tampermonkey-safe
+Whitelisted channels **always appear**, regardless of any other filter:
+
+- Highest priority — whitelist overrides blocklist, keyword, language and all other filters
+- Useful when you enable broad keyword or language filters but want to protect specific channels
+- Also supports **⌥R.* Regex mode** for pattern-based whitelisting
+
+---
+
+## 🔤 Keyword Filter
+
+Create **keyword groups** to filter videos by title or description:
+
+1. Click **＋ New Group** → enter a group name (e.g. `Sponsored`)
+2. Set the scope: **Title**, **Description** or both
+3. Add keywords — plain text or **Regex** supported
+4. Toggle entire groups on / off to temporarily disable a topic
+
+---
+
+## ⚙️ Other Filter Settings
+
+| Setting | Description |
+|---------|-------------|
+| ⏱ **Duration** | Set min / max seconds; videos outside the range are hidden (0 = unlimited) |
+| 📡 **Live / Premiere** | Hide currently live streams / hide upcoming premiere videos |
+| 👑 **Members Only** | Hide videos that require a paid membership |
+| 🌐 **Language** | Auto-detect language from title characters; block or allow specific languages |
+
+Language detection covers 20+ languages. You can also enter custom BCP-47 codes (e.g. `th`, `vi`, `id`).
+
+Always click **💾 Save Settings** after making changes.
+
+---
+
+## ⌥R.* Regex Mode — Detailed Guide
+
+Regular Expressions let a single pattern match many channel names or keywords at once.
+
+### Format Rules
+
+- **Enter the pattern directly** — no leading `/` or trailing `/i` needed
+- **Case-insensitive by default** (equivalent to the `/i` flag always being on)
+- Flag syntax is not supported — writing `memes/i` treats `/i` as part of the pattern
+
+### Channel Name Regex (Blocklist / Whitelist)
+
+Check **⌥R.* Regex mode** when adding a channel, then enter your pattern:
+
+| Pattern | Effect |
+|---------|--------|
+| `memes` | Channel name contains `memes` **anywhere** (case-insensitive) |
+| `^memes` | Channel name **starts with** `memes` |
+| `memes$` | Channel name **ends with** `memes` |
+| `\bmemes\b` | `memes` is a **standalone word** in the channel name |
+| `^memes.*gaming` | Name starts with `memes` and also contains `gaming` |
+| `meme(s)?` | Matches both `meme` and `memes` |
+| `(shorts\|clips)` | Matches channel names containing `shorts` or `clips` |
+| `^NASA$` | Exact full match for `NASA` (case-insensitive) |
+
+> **Note:** Channel Regex matches the **channel name only**, not the @handle / channel ID. To filter by handle, use the exact @handle with Regex mode off.
+
+### Keyword Regex (Keyword Groups)
+
+Inside a keyword group, check **Regex** to match video titles or descriptions with a pattern:
+
+| Pattern | Effect |
+|---------|--------|
+| `^\[SPONSORED\]` | Hide videos with a title starting with `[SPONSORED]` |
+| `(buy one get one\|limited offer)` | Hide titles containing either phrase |
+| `ep\.?\s*\d+` | Hide titles with episode numbers like `ep.1`, `ep 2`, `EP 3` |
+| `https?://` | Hide videos whose description contains a URL |
+| `\b(ad\|ads\|promo)\b` | Hide titles with standalone words `ad`, `ads` or `promo` |
+
+### Common Pitfalls
+
+- Special characters (`. * + ? ( ) [ ] { } ^ $ | \`) have special meanings in Regex. To match them literally, prefix with a backslash — e.g. `\[SPONSORED\]`
+- An invalid pattern (mismatched parentheses, etc.) silently fails to match anything — no error is shown
+- Test your patterns at [regex101.com](https://regex101.com) before adding them
+
+---
+
+## 💾 Export / Import
+
+| Feature | Description |
+|---------|-------------|
+| **Full Settings JSON** | Backs up blocklist, whitelist, keywords and filter settings; import to restore on another device |
+| **Individual CSV export** | Export blocklist / whitelist / keywords as CSV for spreadsheet editing, then re-import |
+| **Stats JSON** | Export filter statistics separately (not included in full backup) |
+| **History CSV** | Export the hidden-video log (title, channel, reason, time) |
+| **Auto backup** | Set an interval in days; the script auto-downloads your settings JSON |
+| **Share list** | Generate a link so others can import your filter settings directly |
+| **Import mode** | Merge: keeps existing data and adds new entries; Overwrite: replaces everything |
+
+> Stats and history are **not included** in the full settings backup. Use the **📊 Stats JSON** and **📋 History CSV** buttons to export them independently.
+
+---
+
+## ⚙️ Global Settings
+
+Found at the bottom of the **⚙️ Settings** tab:
+
+| Option | Description |
+|--------|-------------|
+| 🔔 **Show action notifications (Toast)** | When off, filter toasts are suppressed but still written to the panel log |
+| 📊 **Show Stats & History tabs** | When off, the tabs are hidden; recording continues and export still works |
+
+> Notifications triggered by the **quick action buttons** (🚫 / ⭐) on video cards **always appear**, even when Toast is disabled — so you always know the action completed.
+
+---
+
+## 🔍 Where Filtering Applies
+
+Filters are active across all YouTube surfaces:
+
+- **Homepage** recommendations
+- **Search** results
+- **Subscriptions** feed
+- **Watch page** sidebar recommendations
+
+---
+
+## ❓ FAQ
+
+**Q: Why don't some cards show quick action buttons?**
+A: Buttons rely on the thumbnail being fully rendered. If the thumbnail is still lazy-loading, the bar may not appear or may be mispositioned. Let the page finish loading and hover over the card again.
+
+**Q: Language filter isn't working?**
+A: Detection is based on the **title's character set** — a video titled in English won't be caught even if the spoken language differs. Also make sure you clicked 💾 Save Settings.
+
+**Q: My Regex pattern isn't matching anything?**
+A: Common causes: (1) syntax error in pattern (e.g. unmatched parenthesis); (2) you included `/` or `/i` — remove them and enter only the pattern; (3) settings were not saved.
+
+**Q: How do I export my statistics?**
+A: Go to the **💾 Export/Import** tab and click **📊 Stats JSON**. Stats are not part of the full backup.
+
+---
+
+## Changelog
+
+Current version: **v1.0.2**
+
+See the full changelog below.
+
+---
+
+☕ If this script saves you time, consider supporting development via [Liberapay](https://liberapay.com/MayoHu_xu4fu/donate).
