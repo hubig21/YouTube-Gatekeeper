@@ -1,4 +1,4 @@
-# YouTube Channel Filter — User Guide v1.0.2
+# YouTube Channel Filter — User Guide v1.0.4
 
 A powerful multi-layer YouTube video filter. Block channels, filter by keyword, duration, language, live streams and members-only content.
 
@@ -40,7 +40,7 @@ Whitelisted channels **always appear**, regardless of any other filter:
 
 - Highest priority — whitelist overrides blocklist, keyword, language and all other filters
 - Useful when you enable broad keyword or language filters but want to protect specific channels
-- Also supports **⌥R.* Regex mode** for pattern-based whitelisting
+- Also supports **⌥R.* Regex mode**
 
 ---
 
@@ -66,7 +66,7 @@ Create **keyword groups** to filter videos by title or description:
 
 Language detection covers 20+ languages. You can also enter custom BCP-47 codes (e.g. `th`, `vi`, `id`).
 
-Always click **💾 Save Settings** after making changes.
+Always click **💾 Save Settings** after making changes — filters apply immediately on save.
 
 ---
 
@@ -90,24 +90,28 @@ Check **⌥R.* Regex mode** when adding a channel, then enter your pattern:
 | `^memes` | Channel name **starts with** `memes` |
 | `memes$` | Channel name **ends with** `memes` |
 | `\bmemes\b` | `memes` is a **standalone word** in the channel name |
-| `^memes.*gaming` | Name starts with `memes` and also contains `gaming` |
-| `meme(s)?` | Matches both `meme` and `memes` |
 | `(shorts\|clips)` | Matches channel names containing `shorts` or `clips` |
 | `^NASA$` | Exact full match for `NASA` (case-insensitive) |
 
 > **Note:** Channel Regex matches the **channel name only**, not the @handle / channel ID. To filter by handle, use the exact @handle with Regex mode off.
 
-### Keyword Regex (Keyword Groups)
+### ✅ When to use Regex — and when to just type the name
 
-Inside a keyword group, check **Regex** to match video titles or descriptions with a pattern:
+**Directly entering a channel name** is the most common approach. Regex is only worth using when channel names share a clear, predictable pattern.
 
-| Pattern | Effect |
-|---------|--------|
-| `^\[SPONSORED\]` | Hide videos with a title starting with `[SPONSORED]` |
-| `(buy one get one\|limited offer)` | Hide titles containing either phrase |
-| `ep\.?\s*\d+` | Hide titles with episode numbers like `ep.1`, `ep 2`, `EP 3` |
-| `https?://` | Hide videos whose description contains a URL |
-| `\b(ad\|ads\|promo)\b` | Hide titles with standalone words `ad`, `ads` or `promo` |
+**Good use cases for Regex:**
+
+| Scenario | Pattern |
+|----------|---------|
+| Block all channels ending with "Gaming" | `Gaming$` |
+| Block channels containing "News" or "Politics" | `(News\|Politics)` |
+| Block reaction / commentary channels | `(react\|reaction\|commentary)` |
+
+**When to skip Regex and just type names directly:**
+
+If you want to block channels with completely unrelated names, a single Regex cannot cover all of them accurately. Simply add each channel name individually without enabling Regex mode.
+
+> **Rule of thumb:** If you find yourself writing `(A|B|C)` to list completely unrelated names, add them as separate exact-match entries instead.
 
 ### Common Pitfalls
 
@@ -142,7 +146,7 @@ Found at the bottom of the **⚙️ Settings** tab:
 | 🔔 **Show action notifications (Toast)** | When off, filter toasts are suppressed but still written to the panel log |
 | 📊 **Show Stats & History tabs** | When off, the tabs are hidden; recording continues and export still works |
 
-> Notifications triggered by the **quick action buttons** (🚫 / ⭐) on video cards **always appear**, even when Toast is disabled — so you always know the action completed.
+> Notifications triggered by the **quick action buttons** (🚫 / ⭐) on video cards **always appear**, even when Toast is disabled.
 
 ---
 
@@ -160,22 +164,28 @@ Filters are active across all YouTube surfaces:
 ## ❓ FAQ
 
 **Q: Why don't some cards show quick action buttons?**
-A: Buttons rely on the thumbnail being fully rendered. If the thumbnail is still lazy-loading, the bar may not appear or may be mispositioned. Let the page finish loading and hover over the card again.
+A: Buttons rely on the thumbnail being fully rendered. Let the page finish loading and hover over the card again.
 
 **Q: Language filter isn't working?**
-A: Detection is based on the **title's character set** — a video titled in English won't be caught even if the spoken language differs. Also make sure you clicked 💾 Save Settings.
+A: Detection is based on the **title's character set**. Also make sure you clicked 💾 Save Settings — filters apply immediately on save.
 
 **Q: My Regex pattern isn't matching anything?**
 A: Common causes: (1) syntax error in pattern (e.g. unmatched parenthesis); (2) you included `/` or `/i` — remove them and enter only the pattern; (3) settings were not saved.
 
+**Q: When should I use Regex instead of just typing the channel name?**
+A: Use Regex when channel names share a common naming pattern. If the channels you want to block have completely unrelated names, adding them individually as exact matches is faster and more reliable.
+
 **Q: How do I export my statistics?**
 A: Go to the **💾 Export/Import** tab and click **📊 Stats JSON**. Stats are not part of the full backup.
+
+**Q: After using a quick action button, the panel list doesn't update until I switch tabs?**
+A: Fixed in v1.0.4. The panel list now updates silently in the background after any quick action. The next time you open the panel, the list is already up to date — no tab switching needed.
 
 ---
 
 ## Changelog
 
-Current version: **v1.0.2**
+Current version: **v1.0.4**
 
 See the full changelog below.
 
