@@ -1,382 +1,318 @@
-# YouTube Channel Filter — User Manual
+# 🔍 YouTube Channel Filter — User Guide
 
-> v1.1.0 ｜ Tampermonkey userscript ｜ Traditional Chinese & English
-
-<br>
-
-## 🔗 Table of Contents
-
-- [Installation](#installation)
-- [Language Switch](#language-switch)
-- [🚫 Blocklist](#-blocklist)
-- [⭐ Whitelist](#-whitelist)
-- [🔤 Keywords](#-keywords)
-- [⚙️ Settings (filters)](#️-settings-filters)
-- [📊 Stats & 📋 History](#-stats---history)
-- [💾 Import / Export](#-import--export)
-- [🏷️ Tag System](#️-tag-system)
-- [🔍 Complete Regex Guide](#-complete-regex-guide)
-- [🛡️ Child Safety Setup Example](#️-child-safety-setup-example)
-- [⌨️ Keyboard Shortcuts & Quick Actions](#️-keyboard-shortcuts--quick-actions)
-- [FAQ](#faq)
+> Version: v1.4.0-rc17 · Tampermonkey / Violentmonkey userscript
 
 ---
 
-## Installation
+## Table of Contents
 
-1. Install **Tampermonkey** browser extension (Chrome / Firefox / Edge all work)
-2. Open the userscript file: `youtube-channel-filter-v1.1.0.user.js`
-3. Tampermonkey will prompt for installation → confirm
-4. Open any YouTube page — you should see the 🔍 floating button in the bottom-right corner
-
-### Verify version
-
-Open the panel (click 🔍 or use Tampermonkey menu "⚙️ Open management panel"). The **top-right corner of the panel should show `v1.1.0`**.
-
----
-
-## Language Switch
-
-The UI follows system language by default (Traditional Chinese / English). To switch:
-
-1. Click 🔍 to open the management panel
-2. Go to the "⚙️ Settings" tab
-3. At the **very top**, in the "⚙️ Global settings" section → find the "🌐 Interface language" dropdown
-4. Select "繁體中文" or "English" → **effective immediately** (panel and all card buttons update)
-
-The language setting is stored in `ytf_lang` and syncs across browser tabs.
+1. [Quick Start](#quick-start)
+2. [Interface Overview](#interface-overview)
+3. [Features](#features)
+   - [Blocklist](#-blocklist)
+   - [Whitelist](#-whitelist)
+   - [Video Blocklist](#-video-blocklist)
+   - [Keyword Filter](#-keyword-filter)
+   - [Settings](#️-settings)
+   - [Stats / History](#-stats--history)
+   - [Import / Export](#-import--export)
+4. [Advanced Features](#advanced-features)
+   - [Filter Scope (Advanced)](#filter-scope-advanced)
+   - [Regex Mode](#regex-mode)
+   - [Kids Mode Setup](#kids-mode-setup)
+5. [Quick Actions](#quick-actions)
+6. [PIN Lock](#pin-lock)
+7. [Notes](#notes)
 
 ---
 
-## 🚫 Blocklist
+## Quick Start
 
-All channels added to this list will have their videos **completely hidden** from all listing pages (home, search, recommendations, subscriptions, etc.).
-
-### Adding a channel
-
-#### Method A: Quick-add from video card
-1. Hover any video card
-2. A "🚫 Block channel" button slides out at the bottom → click it
-3. All videos from that channel disappear instantly
-
-#### Method B: Manual add from panel
-1. Open panel → "🚫 Blocklist" tab
-2. Click "＋ Add"
-3. Enter channel name or @handle; optionally check "⌥R.* Regex mode"
-4. Click "Confirm"
-
-### Managing entries
-
-| Button | Description |
-|--------|-------------|
-| ✏️ | Edit channel name / ID / Regex mode / tags |
-| ✕ | Remove (two-step confirmation to prevent accidents) |
-| 🏷 | Open the tag management panel for this entry |
-| 🗑 Clear all | Clear the entire blocklist (with confirmation) |
-
-### Search
-
-The **search bar at the top** filters by channel name or @handle; the **tag filter bar** filters by tag.
+1. Install [Tampermonkey](https://www.tampermonkey.net/) or Violentmonkey browser extension
+2. Install this userscript
+3. Open YouTube — a **🔍** button will appear in the top navigation bar
+4. Left-click 🔍 to open the management panel and start using
 
 ---
 
-## ⭐ Whitelist
+## Interface Overview
 
-All channels added to this list will **always be shown** (bypassing all filter rules).
+The management panel contains the following tabs:
 
-### Use cases
-- Protect important channels from being accidentally blocked by keyword or other filters
-- Combined with "⭐ Show only whitelisted channels" setting, create a trusted-channel-only browsing mode (e.g., for children)
-- **Whitelisted channels will NOT show the "🚫 Block" quick-action button** (reduces accidental blocks)
-
-### Adding / managing
-
-Operations are the same as the Blocklist (use the card's ⭐ quick button or add manually from the panel).
-
-Whitelist entries also support:
-- **Tag management** (🏷 button)
-- **Edit** (✏️ button)
-- **Tag filter bar** (top chip row)
-- **CSV export with tags column**
-
-Whitelist and Blocklist have **completely independent tag pools** — identical tag names are counted separately.
+| Tab | Description |
+|-----|-------------|
+| 🚫 Blocklist | Manage channels to hide |
+| ⭐ Whitelist | Manage trusted channels (works with whitelist-only mode) |
+| 🎬 Video Blocklist | Block specific video IDs |
+| 🔤 Keywords | Filter videos by title / description |
+| ⚙️ Settings | Global settings and filter conditions |
+| 📊 Stats | View filtering statistics |
+| 📋 History | View filtered video history |
+| 💾 Import/Export | Backup and restore settings |
+| 🎯 Filter Scope | Specify which pages each rule applies to (enable in Settings first) |
 
 ---
 
-## 🔤 Keywords
+## Features
 
-Create multiple "keyword groups", each containing multiple keywords. A video whose title or description matches any keyword is hidden.
+### 🚫 Blocklist
 
-### Creating a group
+Add channels you don't want to see. Cards from those channels will be automatically hidden on the homepage, subscriptions feed, search results, and other listing pages.
 
-1. Click "＋ New group"
-2. Enter group name (e.g., "Politics", "Sponsored", "Harmful")
-3. Choose **scope**: Title / Description (at least one required)
-4. Click "Create"
+**How to add:**
+- **Manual input**: Fill in the channel name (required) and `@handle` (optional) in the panel form, then click Add
+- **Quick button**: Hover over a video card — an action bar slides up from the bottom. Click 🚫 to block instantly
+- **Three-dot menu**: If set to "Three-dot menu" mode, click the video's ⋮ menu and select "YtFC: Hide this channel"
 
-### Adding keywords
-
-1. Within the group, click "＋ Keyword"
-2. Enter keyword or Regex pattern
-3. Check the "Regex" checkbox to enable regex mode
-4. Click "Add"
-
-### Managing groups
-
-| Button | Description |
-|--------|-------------|
-| 🔴 / ⚪ | Enable / disable the group (preserves data) |
-| ↑ ↓ | Adjust group priority |
-| ✏️ | Edit group name / scope |
-| 🗑 Delete group | Delete the entire group (with confirmation) |
-
-### Searching groups / keywords
-
-The **search bar above the group list** filters in real time:
-- Type "sponsored" → only groups whose name or any keyword contains "sponsored" appear
-- Matching keyword chips are **highlighted in gold**; matching group names show in **gold text**
+**Tags**: Each channel can have tags for easier categorization (e.g., "Ad accounts", "Farm channels").
 
 ---
 
-## ⚙️ Settings (filters)
+### ⭐ Whitelist
 
-The Settings page is organized into sections, from top to bottom:
+Add channels you trust or want to protect. Whitelisted channels are never affected by any filter rule — they won't be caught by the blocklist, keywords, or any other filter.
 
-### 💾 Save settings (pinned at top)
-Click this to save all configuration changes.
-
-### ⚙️ Global settings
-- **🌐 Interface language**: 繁體中文 / English
-- **Show toasts**: if disabled, toasts stop appearing but logs still record
-- **Show Stats & History tabs**: if disabled, these tabs are hidden but data is still tracked
-
-### ⭐ Whitelist-only mode
-When enabled, **only whitelisted channels are shown**; everything else is hidden. This is the core switch for the child-safety setup.
-
-### ⏱ Video duration
-- Min / max duration (seconds)
-- Example: `60 / 600` → only show videos between 1 and 10 minutes
-
-### 📡 Live / Premiere
-- Hide live streams
-- Hide upcoming premieres
-
-### 👑 Members-only
-Hide members-only videos.
-
-### 📅 Upload date
-- Supports semantic ranges: "within N days/weeks/months/years"
-- Default: "within 30 days"
-
-### 👁 View count
-- Min / max views
-- Accepts plain numbers (10000) or abbreviations (10K = 10,000, 1M = 1,000,000)
-- Live-stream viewer counts are **not counted**
-
-### 🌐 Language filter
-- **Mode**: block specific languages / allow only specific languages
-- **Common language checkboxes**: Japanese / Korean / Chinese / English / Russian / Arabic / Spanish / French / German / Portuguese / Hindi / Thai / Vietnamese / Indonesian / Turkish / Italian
-- **Custom codes**: comma-separated BCP-47 codes (e.g., `nl, pl, sv`)
-- **Detection method**: Title character-set analysis. Latin-based languages (Vietnamese, French, etc.) have lower detection accuracy due to character overlap — combine with keyword filters for better results
+**Whitelist-only mode**: Enable "Show only whitelisted channels" in ⚙️ Settings. Once enabled, all channels except those in the whitelist will be hidden. Ideal for parental controls or a minimal viewing experience.
 
 ---
 
-## 📊 Stats & 📋 History
+### 🎬 Video Blocklist
 
-### 📊 Stats
-- **Keyword ranking**: which keywords trigger hides most often
-- **Channel ranking**: which channels get hidden most often (shows names for easy identification)
-- Two-column side-by-side layout for clarity
+Block specific video IDs without needing to block the entire channel. Common use cases: hiding specific controversial videos or blocking episodes you're not interested in.
 
-### 📋 History
-- Last **500 entries** of hidden videos
-- Includes: video title, channel name, channel ID, trigger reason, hidden time
-- Supports search and CSV export
+- Accepts a video ID (11 characters) or a full YouTube URL
+- Once added, the block is **always enforced** and is not controlled by the Filter Scope matrix
+- Accessing the video directly via URL will also show a block screen (requires "Force Block" to be enabled in Settings)
 
 ---
 
-## 💾 Import / Export
+### 🔤 Keyword Filter
 
-### Export all settings (JSON)
-Bundles **all** blocklist, whitelist, keywords, and filter settings into a single JSON file.
+Filter videos based on keywords found in their title or description. Keywords are managed in **groups** — each group can be individually enabled or disabled.
 
-### Individual exports (CSV)
-- Blocklist CSV (with Tags column)
-- Whitelist CSV (with Tags column)
-- Keywords CSV (with group name, scope, Regex flag)
-- Stats JSON
-- History CSV (trigger reasons are **localized** to human-readable text)
+**Creating a keyword group:**
+1. Click "＋ Add Group" and enter a group name
+2. Select the scope: title, description, or both
+3. Add keywords within the group
+4. Make sure the group toggle is set to "Enabled"
 
-All CSVs include **UTF-8 BOM**, so Windows Excel opens them correctly without character corruption.
-
-### Import settings
-1. Choose import mode: **Overwrite** / **Merge**
-2. Choose file: JSON (full backup) or CSV (individual)
-
-### Auto-backup
-- Enable "Auto-backup" → a backup JSON is downloaded every N hours
-- Customize filename prefix (default `yt-filter-backup-`)
-
-### Share lists
-Generate a URL containing selected lists (blocklist / whitelist / keywords / all). Recipients click the URL to quickly import the settings. **No server involved** (data encoded in URL itself).
+**Group priority**: Groups higher in the list take priority. Drag to reorder.
 
 ---
 
-## 🏷️ Tag System
+### ⚙️ Settings
 
-### Why tags?
+| Setting | Description |
+|---------|-------------|
+| Show Toast notifications | Whether to show popup notifications after actions |
+| Quick action style | Choose between "Quick Buttons" (hover bar) or "Three-dot menu" (integrated into YouTube's ⋮ menu) |
+| Show only whitelisted channels | Whitelist-only mode |
+| Video duration | Filter videos shorter or longer than a specified length (seconds) |
+| Live / Upcoming | Hide live streams or upcoming premieres |
+| Members-only videos | Hide members-only or members-first videos |
+| View count | Filter by view count (below or above a threshold) |
+| Upload date | Hide videos that are too old or too new |
+| Language filter | Filter or show only specific languages |
+| Channel posts | Hide channel community posts |
+| Fundraiser | Hide videos marked as fundraisers |
+| Force Block (direct URL access) | Block access to blocked channels/videos even when navigating directly by URL |
+| Enable Filter Scope (Advanced) | Reveals the "🎯 Filter Scope" tab |
+| PIN Lock | Set a password to protect the management panel |
 
-When blocklist or whitelist grows to hundreds of channels, **tagging** makes management easier:
-- Categories like "Politics", "Sponsored", "Reuploader"
-- Custom groupings like "Trusted", "Watching", "Kid-safe"
-- Tags column in exported CSV enables offline categorization
+---
 
-### Adding tags
+### 📊 Stats / History
 
-#### Method A: Quick panel via 🏷
-1. Hover channel entry → click 🏷
-2. The panel expands into two sections:
-   - **📝 Add tag** — enter new tag + press Enter or click ＋
-   - **📌 All tags (✓ owned, click to toggle)** — all system tags as chips, **click to toggle state**
+- **Stats**: View trigger counts per rule and top blocked channels
+- **History**: Browse recently filtered videos with reasons for filtering
 
-#### Method B: Edit form
-Click ✏️ to open the edit form. The "tags" field accepts **comma-separated** input. Below the input, an "📌 All tags" chip row lets you click to toggle.
+---
 
-### Filtering
+### 💾 Import / Export
 
-Each list has a **tag filter bar** at the top:
-- `All (200)` → show all entries
-- `Politics (15)` → show only entries tagged "Politics"
+Supports full backup and individual exports. Formats include CSV (blocklist, whitelist, keywords) and JSON (all settings, video blocklist).
 
-### Important rules
+**Backup tip**: Enable "Auto Backup" in Settings to automatically export your full settings to the download folder on a schedule.
 
-| Item | Description |
+---
+
+## Advanced Features
+
+### Filter Scope (Advanced)
+
+Filter Scope lets you specify which YouTube page types each filter rule applies to. It's designed for users who need fine-grained control.
+
+#### How to Enable
+
+1. Go to ⚙️ **Settings**
+2. Scroll to the bottom and check "**Enable Filter Scope (Advanced)**"
+3. Click "💾 Save Settings"
+4. A new "🎯 **Filter Scope**" tab will appear — click it to configure
+
+#### Understanding the Matrix
+
+The interface shows an **11 rules × 7 pages** matrix:
+
+**Page types:**
+
+| Type | Description |
 |------|-------------|
-| Tag isolation | Blocklist tags vs Whitelist tags are **completely independent**, even if named identically |
-| Real-time sync | All related UI refreshes instantly after adding/removing tags |
-| Auto-reset on empty filter | If a filtered tag is removed entirely, the list auto-returns to "All" |
+| 🏠 Home | YouTube homepage |
+| 📨 Subscriptions | Subscriptions feed |
+| 🔍 Search | Search results page |
+| 🎬 Watch page | Recommendations sidebar while watching a video |
+| 📺 Channel page | When visiting a specific channel |
+| 🔥 Trending | Trending videos page |
+| 📄 Other | Any other page |
+
+**Rule types:**
+Channel Blocklist, Video Blocklist, Keywords, Members-only, Live/Upcoming, Fundraiser, Upload Date, View Count, Language, Duration, Channel Posts.
+
+#### How to Use
+
+- **Click a cell**: Toggle the rule on/off for that page type (active = colored, inactive = gray)
+- **"✓ All On" at row end**: Enable this rule for all page types
+- **"✕ All Off" at row end**: Disable this rule for all page types
+- **"Reset all to enabled" button**: Restore defaults (all rules apply to all pages)
+- **Current page**: Highlighted with a special style so you can see where you are in the matrix
+
+#### Example Use Cases
+
+**Example 1 — Allow seeing blocked channels on their own channel page**
+> Uncheck "Channel Blocklist" × "Channel page"
+> → When visiting a blocked channel's page, their videos are still visible; but they remain hidden on the homepage and other listing pages
+
+**Example 2 — Apply keyword filter only on the homepage**
+> For the "Keywords" rule, keep only "Home" checked, uncheck all other pages
+> → Keyword filters won't interfere when you're specifically searching for something
+
+**Example 3 — Don't filter live streams on the subscriptions feed**
+> Uncheck "Live / Upcoming" × "Subscriptions"
+> → Live streams from subscribed channels will appear in your subscriptions feed, but not on the homepage
 
 ---
 
-## 🔍 Complete Regex Guide
+### Regex Mode
 
-### When to use Regex
+Keyword groups support JavaScript Regular Expressions, giving you more flexible pattern matching for video titles and descriptions.
 
-Enable **⌥R.* Regex mode** in blocklist/whitelist entries or keyword groups. Use it for:
-- Prefix / suffix matching
-- Batch naming patterns (EP1 / EP.1 / EP 1 etc.)
-- Avoiding partial matches (e.g., match "NASA" but not "NASA-related")
+#### How to Enable
 
-**Case-insensitive by default.**
+When adding a keyword inside a group, check the "**Regex**" checkbox to enable regex mode for that keyword.
 
-### Common syntax
+#### Rules
+
+- **No need** to wrap the pattern in `/` slashes or add flags like `/i`
+- Matching is **case-insensitive** by default
+- Backslashes (`\`) can be entered directly — no extra escaping needed
+
+#### Common Examples
 
 | Pattern | Description |
 |---------|-------------|
-| `^abc` | Starts with abc |
-| `abc$` | Ends with abc |
-| `a\|b` | Matches a OR b |
-| `\d+` | One or more digits |
-| `\b` | Word boundary (avoids partial match) |
-| `.*` | Any characters (zero or more) |
-| `[0-9]` | Character range |
+| `(ad\|sponsored\|paid)` | Title contains "ad", "sponsored", or "paid" |
+| `(stock\|invest\|crypto)` | Title mentions any finance-related term |
+| `EP\.?\d+` | Episode number formats: EP1, EP.1, EP 1, etc. |
+| `^(?!.*official).*$` | Title does **not** contain "official" (negative lookahead) |
+| `\d{4}` | Title contains a 4-digit number (e.g., a year) |
+| `(LIVE\|STREAM\|streaming)` | Various live stream indicators |
 
-### Practical examples
+#### Tips
 
-| Pattern | Matches |
-|---------|---------|
-| `^\[Ad\]` | All videos with titles starting with "[Ad]" |
-| `\bNASA\b` | Standalone NASA (avoids "NASA-related") |
-| `(stocks\|investing\|finance)` | Mentions stocks, investing, or finance |
-| `EP\.?\d+` | Matches EP1 / EP.1 / EP 1 episode formats |
-| `^(?!.*official).*$` | Titles that do **NOT** contain "official" (negative lookahead) |
-
-### Tips
-
-No need to add `/` slashes or `/i` flags — **just enter the pattern**. Backslash escaping is handled by the UI.
+- Regex applies only to the **individual keyword** where it's enabled; other keywords in the same group continue to use plain text matching
+- If a pattern has invalid syntax (e.g., unmatched parentheses), the keyword automatically falls back to plain text matching
+- For best performance, prefer `(a|b|c)` patterns over complex lookaheads
 
 ---
 
-## 🛡️ Child Safety Setup Example
+### Kids Mode Setup
 
-Build a child-friendly browsing environment using existing features:
+By combining multiple features, you can create a "whitelist-only + automatic dangerous content filtering" child-friendly browsing environment.
 
-### 6 Steps
+> ⚠️ **Important Disclaimer:** This script only filters video cards on listing pages (homepage, search, recommendations). It cannot block direct URL navigation to a video, and it cannot analyze the actual content of videos. **Strongly recommended to use alongside YouTube Kids, parental control software (e.g., Google Family Link), or router-level DNS filtering.**
 
-**Step 1** | **Whitelist**: Go to ⭐ Whitelist tab, add child-safe channels (e.g., `@PBSKids`, `@SesameStreet`, `@CocomelonOfficial`)
+#### Complete Setup Steps
 
-**Step 2** | **Whitelist-only**: Go to ⚙️ Settings (top), enable "⭐ Show only whitelisted channels" — everything else will be hidden
+**Step 1 — Build a whitelist**
+Go to the ⭐ **Whitelist** tab and add every channel your child is allowed to watch.
+For example: @PBSKids, @SesameStreet, @CocomelonOfficial
 
-**Step 3** | **No live streams**: In "📡 Live / Premiere" section, enable "Hide live streams" and "Hide upcoming premieres" — avoids live chat risks
+**Step 2 — Enable whitelist-only mode**
+Go to ⚙️ **Settings** and turn on "⭐ Show only whitelisted channels".
+After enabling, all channels except those in the whitelist will be hidden.
 
-**Step 4** | **Keyword blocklist**: In 🔤 Keywords, create a "Harmful content" group with words like "violence, gore, horror, adult, gambling" and enable it (regex: `(violence|gore|horror|adult|gambling)`)
+**Step 3 — Block live streams**
+In Settings, under "📡 Live / Upcoming", enable both:
+- Hide live streams
+- Hide upcoming / scheduled premieres
 
-**Step 5 (optional)** | **Date limit**: In 📅 Upload date, set "Hide videos older than 30 days" — prevents algorithm pushing old controversial content
+Live chat in streams is a common risk vector — block them entirely.
 
-**Step 6 (optional)** | **Language filter**: In 🌐 Language filter, select "Show only selected languages" and check only the child's native language
+**Step 4 — Create a dangerous content keyword group**
+Go to 🔤 **Keywords**, create a group named "Dangerous Content", and set scope to "Title":
 
-### ⚠️ Important disclaimer
+Add keywords such as:
+```
+violence, blood, horror, adult, gambling, weapons, drugs
+```
 
-This script **only filters listing pages** (home / search / recommendations). It **cannot**:
-- Block direct URL access
-- Detect actual video content (only reads metadata)
+For more efficiency, enable Regex mode and enter:
+```
+(violence|gore|horror|adult|gambling|18\+|explicit)
+```
 
-**Strongly recommended additions**:
-- YouTube Kids app
-- Parental control software (Google Family Link, etc.)
-- Router-level DNS filtering (CleanBrowsing, NextDNS, etc.)
+**Step 5 (Recommended) — Restrict video age**
+In Settings, enable "📅 Upload Date" and set it to hide videos uploaded more than 30 days ago.
+This helps prevent the algorithm from surfacing old controversial content.
 
----
+**Step 6 (Recommended) — Language filter**
+In Settings, enable "🌐 Language Filter", choose "Show only selected languages", and check only your child's native language.
+This effectively filters out most foreign-language content.
 
-## ⌨️ Keyboard Shortcuts & Quick Actions
+**Step 7 (Recommended) — Set a PIN lock**
+In Settings, set up a "PIN Lock" to prevent your child from changing the filter settings.
 
-| Action | Behavior |
-|--------|----------|
-| Top bar 🔍 button **left-click** | Open management panel |
-| Top bar 🔍 button **right-click** | Toggle filter on/off (temporarily see raw YouTube) |
-| Video card hover | Bottom slides out "🚫 Block" & "⭐ Whitelist" buttons |
-| Tampermonkey menu | Provides "Open panel", "Toggle filter", "Backup settings now" options |
+#### Advanced Setup with Filter Scope
 
-### Debug mode
+After enabling Filter Scope (Advanced), you can fine-tune kids mode further:
 
-Enable via Tampermonkey menu "🔍 Toggle debug mode":
-- Browser console shows detailed logs
-- Run `__ytfReport()` to view statistics
-- **Keep disabled** during normal use to avoid noise
-
----
-
-## FAQ
-
-### Q: Tampermonkey doesn't detect the new version?
-Delete the old version → install the new one. Verify the loaded version via the top-right version badge in the panel.
-
-### Q: Exported CSV shows garbled Chinese in Excel?
-Verify version is **v1.1.0 or higher** (UTF-8 BOM fix). If still garbled, use Excel's "Data → From Text" with UTF-8 encoding.
-
-### Q: Language detection is inaccurate?
-Latin-based languages (English, Spanish, Vietnamese, French) have lower accuracy due to character overlap. **Combine with keyword filters** for more precise results.
-
-### Q: Whitelisted channel still gets blocked?
-Possible causes:
-1. Channel ID or name has inconsistent spelling (including case)
-2. The channel is a playlist / YouTube Mix (not single-channel content)
-3. If using Regex, verify the pattern matches correctly
-
-### Q: Why can't some video tags be filtered by keywords?
-Keywords only match **visible title and description**. If a video's description is **collapsed or truncated** by YouTube, description matching may fail. Always include "Title" in the scope.
-
-### Q: Where is data stored?
-- `ytf_bl` / `ytf_wl` / `ytf_kg` / `ytf_fl` / `ytf_gl`: lists and settings
-- `ytf_st` / `ytf_hi`: stats and history
-- `ytf_vcm`: videoId→channelId cache
-- `ytf_lang`: interface language
-
-All data is stored in Tampermonkey's GM Storage. **Nothing is uploaded to any server**.
+- **Home, Subscriptions, Search**: Enable all rules
+- **Watch page sidebar**: Enable all rules to prevent inappropriate recommendations while watching
+- **Channel page**: You can relax the "Channel Blocklist" rule so parents can still browse a specific channel to review it
 
 ---
 
-## Links
+## Quick Actions
 
-- **GitHub**: https://github.com/hubig21/YouTube-Gatekeeper
-- **Donate**: [Liberapay](https://liberapay.com/MayoHu_xu4fu/donate) | [Ko-fi](https://ko-fi.com/L4L41XPRRX)
+| Action | Description |
+|--------|-------------|
+| Left-click 🔍 in top bar | Open management panel |
+| Right-click 🔍 in top bar | Toggle filter on / off |
+| Hover over a video card | Quick action bar slides up from the bottom (Button mode) |
+| Click a video's ⋮ menu | YtFC options appear (Three-dot menu mode) |
+| Tampermonkey extension menu | Provides "Open Panel" and "Toggle Filter" options |
+
+**Two quick action modes (switchable in Settings):**
+- **Quick Buttons**: Hovering a video reveals a bottom bar with "🚫 Hide Channel", "⭐ Add to Whitelist", and "🎬 Block Video" buttons
+- **Three-dot menu**: The same three options are injected into YouTube's native ⋮ context menu for a more seamless look
+
+---
+
+## PIN Lock
+
+Enable PIN Lock in the ⚙️ Settings panel under "PIN Lock":
+
+- Once set, opening the management panel requires entering the PIN
+- While locked, all tabs and the global on/off toggle are disabled
+- The panel automatically re-locks when closed
+- The "Remove from blocklist" button on the Blocker overlay screen also requires PIN verification (independently — it does not inherit the panel's unlocked state)
+
+---
+
+## Notes
+
+- The script only filters **video cards on listing pages** — it does not affect the actual content of videos being played
+- YouTube Shorts are not in scope; use a dedicated Shorts filter script (e.g., Hide YouTube Shorts, UnHook) alongside this one
+- When a channel page contains no UC ID, matching relies primarily on `@handle` and channel name
+- If a blocked channel's cards still appear, try refreshing the page or clicking "Save Settings" in the panel
+- Settings are stored in the browser's localStorage — please export a backup before clearing browser data
