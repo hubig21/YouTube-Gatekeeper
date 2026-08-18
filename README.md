@@ -1,4 +1,4 @@
-# 🛡️ YouTube Channel Filter (YTcF) / YouTube Gatekeeper
+# 🛡️ YouTube Channel Filter (YTcF)
 
 [![Greasy Fork Version](https://img.shields.io/greasyfork/v/547742?label=Greasy%20Fork)](https://greasyfork.org/en/scripts/547742-youtube-channel-filter-ytcf)
 [![Greasy Fork Installs](https://img.shields.io/greasyfork/dt/547742?label=installs)](https://greasyfork.org/en/scripts/547742-youtube-channel-filter-ytcf)
