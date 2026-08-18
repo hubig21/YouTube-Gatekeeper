@@ -1,4 +1,4 @@
-# 🛡️ YouTube Channel Filter (YTcF) / YouTube Gatekeeper
+# 🛡️ YouTube Channel Filter (YTcF)
 
 [![Greasy Fork Version](https://img.shields.io/greasyfork/v/547742?label=Greasy%20Fork)](https://greasyfork.org/en/scripts/547742-youtube-channel-filter-ytcf)
 [![Greasy Fork Installs](https://img.shields.io/greasyfork/dt/547742?label=installs)](https://greasyfork.org/en/scripts/547742-youtube-channel-filter-ytcf)
@@ -101,7 +101,7 @@ Add channels you don't want to see. Cards from those channels will be automatica
 **How to add:**
 - **Manual input**: Fill in the channel name (required) and `@handle` (optional) in the panel form, then click Add
 - **Quick button**: Hover over a video card — an action bar slides up from the bottom. Click 🚫 to block instantly
-- **Three-dot menu**: If set to "Three-dot menu" mode, click the video's ⋮ menu and select "YtFC: Hide this channel"
+- **Three-dot menu**: If set to "Three-dot menu" mode, click the video's ⋮ menu and select "YTcF: Hide this channel"
 
 **Tags**: Each channel can have tags for easier categorization (e.g., "Ad accounts", "Farm channels").
 
@@ -328,7 +328,7 @@ After enabling Filter Scope (Advanced), you can fine-tune kids mode further:
 | Left-click 🔍 in top bar | Open management panel |
 | Right-click 🔍 in top bar | Toggle filter on / off |
 | Hover over a video card | Quick action bar slides up from the bottom (Button mode) |
-| Click a video's ⋮ menu | YtFC options appear (Three-dot menu mode) |
+| Click a video's ⋮ menu | YTcF options appear (Three-dot menu mode) |
 | Tampermonkey extension menu | Provides "Open Panel" and "Toggle Filter" options |
 
 **Two quick action modes (switchable in Settings):**
@@ -369,9 +369,25 @@ If you run into flickering, filters not working, or delayed card updates:
 
 ---
 
-## 📜 License & Credits
+## 📜 License
 
 This project is licensed under the [MIT License](LICENSE).
 Author: **MayoHu** · GitHub: [YouTube-Gatekeeper](https://github.com/hubig21/YouTube-Gatekeeper)
+
+---
+
+## 🙏 Acknowledgements
+
+Thanks to the following contributors for long-term testing, bug reports, and suggestions:
+
+**Core Reporters**
+
+- **Azazello** — In-depth testing of early versions, extensive bug reports, and Regex feature suggestions
+- **JourneyOver** — Key usage-scenario feedback and feature suggestions
+- **Fox Huang** — Helped test filtering compatibility with Chinese-language channels
+
+**Community Reporters** (Greasy Fork & GitHub, in order reported)
+
+CherryBlossom_TW · NightOwlGamer · 台灣小確幸 · PixelWalker88 · SakuraNeko · MapleDrift · CoralSeeker · ZephyrTides · LanternFish99 · QuietMountain · TealDragonfly · GlassHarmonics · SilverFernLeaf · NoodleArchitect · CrimsonTideTV · WanderlustFreq · TeaLeafReader · MossyPebble42 · StarlightCoast · VinylWhisper
 
 ☕ If this script has been useful to you, consider supporting development via [Liberapay](https://liberapay.com/MayoHu_xu4fu/donate).

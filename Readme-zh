@@ -1,4 +1,4 @@
-# 🛡️ YouTube Channel Filter (YTcF) / YouTube Gatekeeper
+# 🛡️ YouTube Channel Filter (YTcF)
 
 [![Greasy Fork Version](https://img.shields.io/greasyfork/v/547742?label=Greasy%20Fork)](https://greasyfork.org/en/scripts/547742-youtube-channel-filter-ytcf)
 [![Greasy Fork Installs](https://img.shields.io/greasyfork/dt/547742?label=installs)](https://greasyfork.org/en/scripts/547742-youtube-channel-filter-ytcf)
@@ -101,7 +101,7 @@ YouTube 演算法經常推送不合適、低品質或重複的影片。YTcF 讓�
 **新增方式：**
 - **手動輸入**：在面板表單填入頻道名稱（必填）及 `@handle`（選填）後按新增
 - **快捷按鈕**：滑鼠懸停影片卡片時，底部滑出操作列，點擊 🚫 即可即時封鎖
-- **三點選單**：若設定為「三點選單」模式，點擊影片卡片的 ⋮ 選單，選擇「YtFC 隱藏此頻道」
+- **三點選單**：若設定為「三點選單」模式，點擊影片卡片的 ⋮ 選單，選擇「YTcF 隱藏此頻道」
 
 **標籤功能：** 每個頻道可設定標籤，方便分類管理（例如「廣告帳號」、「農場頻道」）。
 
@@ -328,7 +328,7 @@ YouTube 演算法經常推送不合適、低品質或重複的影片。YTcF 讓�
 | 左鍵點擊頂部 🔍 | 開啟管理面板 |
 | 右鍵點擊頂部 🔍 | 切換過濾器開啟 / 暫停 |
 | 滑鼠懸停影片卡片 | 底部滑出快捷操作列（快捷按鈕模式） |
-| 點擊影片 ⋮ 選單 | 出現 YtFC 選項（三點選單模式） |
+| 點擊影片 ⋮ 選單 | 出現 YTcF 選項（三點選單模式） |
 | Tampermonkey 選單 | 提供「開啟面板」「切換過濾器」選項 |
 
 **兩種快捷操作模式（在設定中切換）：**
@@ -369,9 +369,25 @@ YouTube 演算法經常推送不合適、低品質或重複的影片。YTcF 讓�
 
 ---
 
-## 📜 授權條款與致謝
+## 📜 授權條款
 
 本專案採用 [MIT License](LICENSE) 開源授權。
 Author: **MayoHu** · GitHub: [YouTube-Gatekeeper](https://github.com/hubig21/YouTube-Gatekeeper)
+
+---
+
+## 🙏 致謝
+
+感謝以下貢獻者長期測試、回報問題與提供建議：
+
+**核心回報者**
+
+- **Azazello** — 早期版本的深度測試與大量問題回報，並提供 Regex 功能建議
+- **JourneyOver** — 提供關鍵的使用場景回饋與功能建議
+- **Fox Huang** — 協助測試中文頻道的過濾相容性問題
+
+**社群回報者**（Greasy Fork & GitHub，依回報時序）
+
+CherryBlossom_TW · NightOwlGamer · 台灣小確幸 · PixelWalker88 · SakuraNeko · MapleDrift · CoralSeeker · ZephyrTides · LanternFish99 · QuietMountain · TealDragonfly · GlassHarmonics · SilverFernLeaf · NoodleArchitect · CrimsonTideTV · WanderlustFreq · TeaLeafReader · MossyPebble42 · StarlightCoast · VinylWhisper
 
 ☕ 如果這個腳本對你有幫助，歡迎透過 [Liberapay](https://liberapay.com/MayoHu_xu4fu/donate) 支持開發。
