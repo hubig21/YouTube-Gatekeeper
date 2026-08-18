@@ -1,12 +1,44 @@
-<img src="https://github.com/hubig21/YouTube-Gatekeeper/blob/main/cover.png"></img>
-<div align="center" dir="auto">
-<a href="https://github.com/hubig21/YouTube-Gatekeeper/blob/main/Readme-zh">繁體中文</a> | 
-<a href="https://github.com/hubig21/YouTube-Gatekeeper/blob/main/Readme-en">English</a>
-</div>
+# 🛡️ YouTube Channel Filter (YTcF) / YouTube Gatekeeper
 
-# 🔍 YouTube 頻道過濾器 — 使用說明
+[![Greasy Fork Version](https://img.shields.io/greasyfork/v/547742?label=Greasy%20Fork)](https://greasyfork.org/en/scripts/547742-youtube-channel-filter-ytcf)
+[![Greasy Fork Installs](https://img.shields.io/greasyfork/dt/547742?label=installs)](https://greasyfork.org/en/scripts/547742-youtube-channel-filter-ytcf)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![GitHub Issues](https://img.shields.io/github/issues/hubig21/YouTube-Gatekeeper)](https://github.com/hubig21/YouTube-Gatekeeper/issues)
+[![Tampermonkey](https://img.shields.io/badge/works%20with-Tampermonkey%20%2F%20Violentmonkey-00485B)](https://www.tampermonkey.net/)
 
-> 版本：v1.4.0-rc17 · Tampermonkey / Violentmonkey 腳本
+> 深度客製化你的 YouTube 觀看體驗 — 打造乾淨、專注、兒童友善的影音環境。
+
+👉 **[點我到 Greasy Fork 安裝 YouTube Channel Filter](https://greasyfork.org/en/scripts/547742-youtube-channel-filter-ytcf)**（需先安裝 [Tampermonkey](https://www.tampermonkey.net/) 或 Violentmonkey 瀏覽器擴充）
+
+[English README →](Readme-en)
+
+---
+
+## 💡 為什麼需要 YTcF？
+
+YouTube 演算法經常推送不合適、低品質或重複的影片。YTcF 讓你重獲演算法的主導權，不僅支援傳統的頻道與關鍵字過濾，更提供精準的「多維度矩陣過濾」、「協作頻道自動拆解」與「強阻模式」，適用於個人高效學習、家庭兒童防護等多種情境。
+
+## ✨ 核心功能亮點
+
+- **🚫 頻道黑 / 白名單**：支援 UC ID、`@handle`、頻道名稱或 Regex 比對
+- **🎬 單支影片黑名單**：用 Video ID 封鎖特定影片，不影響該頻道其他內容
+- **🤝 協作影片智慧解析**：自動拆解跨頻道合作影片，可選擇只封鎖特定參與者
+- **⭐ 白名單獨享模式**：一鍵切換為「只顯示信任頻道」的極簡/兒童友善模式
+- **🔤 關鍵字群組 + Regex**：可分別設定比對標題/描述，支援進階正規表達式
+- **⏱️ 多維度過濾**：時長、觀看數、上傳日期、語言（BCP-47）、直播/首播、會員專屬、募款活動
+- **🎯 過濾範圍矩陣**（進階）：11 種規則 × 首頁/訂閱/搜尋/觀看頁/頻道頁等頁面類型，各自獨立開關
+- **🛡️ 頁面直接訪問強阻**：直接用網址或外部連結進入已封鎖內容時，可強制暫停 + 覆蓋層阻擋
+- **🖱️ 快捷操作**：懸停快捷列、原生 ⋮ 選單整合、全域懸浮按鈕
+- **🔬 診斷系統**：卡片生命週期追蹤、Debug Log 環形陣列（最高 10,000 筆），問題回報有據可查
+- **💾 完整備份/匯出/分享**：JSON 全量備份、CSV 匯出、一鍵分享連結
+
+完整功能操作說明請見下方〈使用說明〉。
+
+---
+
+# YouTube 頻道過濾器 — 使用說明
+
+> 版本：v1.4.7 · Tampermonkey / Violentmonkey 腳本
 
 ---
 
@@ -28,14 +60,15 @@
    - [兒童模式設定技巧](#兒童模式設定技巧)
 5. [快捷操作](#快捷操作)
 6. [密碼鎖定](#密碼鎖定)
-7. [注意事項](#注意事項)
+7. [問題回報與診斷](#問題回報與診斷)
+8. [注意事項](#注意事項)
 
 ---
 
 ## 快速開始
 
 1. 安裝 [Tampermonkey](https://www.tampermonkey.net/) 或 Violentmonkey 瀏覽器擴充
-2. 安裝本腳本
+2. 到 [Greasy Fork](https://greasyfork.org/en/scripts/547742-youtube-channel-filter-ytcf) 安裝本腳本
 3. 開啟 YouTube，頂部導覽列會出現 **🔍** 按鈕
 4. 左鍵點擊 🔍 開啟管理面板，即可開始使用
 
@@ -315,6 +348,17 @@
 
 ---
 
+## 問題回報與診斷
+
+若遇到畫面閃爍、過濾失效或卡片延遲問題：
+
+1. 開啟管理面板，切換至「使用說明」或點選 Tampermonkey 選單中的「🔬 啟用診斷模式」
+2. 點擊「🪲 開始記錄問題」並重現你遇到的異常現象
+3. 點擊「⏹️ 停止並匯出記錄」下載診斷日誌（`ytcf-diag-xxx.log`）
+4. 前往 [GitHub Issues](https://github.com/hubig21/YouTube-Gatekeeper/issues) 提交回報並附上日誌檔案
+
+---
+
 ## 注意事項
 
 - 腳本僅過濾**列表頁卡片**，無法過濾影片播放頁的實際內容
@@ -323,7 +367,11 @@
 - 若封鎖頻道的卡片仍出現，可嘗試重新整理頁面或在管理面板按「儲存設定」
 - 設定儲存於瀏覽器 localStorage，清除瀏覽器資料前請先匯出備份
 
+---
 
+## 📜 授權條款與致謝
+
+本專案採用 [MIT License](LICENSE) 開源授權。
+Author: **MayoHu** · GitHub: [YouTube-Gatekeeper](https://github.com/hubig21/YouTube-Gatekeeper)
 
 ☕ 如果這個腳本對你有幫助，歡迎透過 [Liberapay](https://liberapay.com/MayoHu_xu4fu/donate) 支持開發。
-

@@ -1,6 +1,44 @@
+# 🛡️ YouTube Channel Filter (YTcF) / YouTube Gatekeeper
+
+[![Greasy Fork Version](https://img.shields.io/greasyfork/v/547742?label=Greasy%20Fork)](https://greasyfork.org/en/scripts/547742-youtube-channel-filter-ytcf)
+[![Greasy Fork Installs](https://img.shields.io/greasyfork/dt/547742?label=installs)](https://greasyfork.org/en/scripts/547742-youtube-channel-filter-ytcf)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![GitHub Issues](https://img.shields.io/github/issues/hubig21/YouTube-Gatekeeper)](https://github.com/hubig21/YouTube-Gatekeeper/issues)
+[![Tampermonkey](https://img.shields.io/badge/works%20with-Tampermonkey%20%2F%20Violentmonkey-00485B)](https://www.tampermonkey.net/)
+
+> Take back control of your YouTube feed — build a clean, focused, kid-friendly viewing environment.
+
+👉 **[Install YouTube Channel Filter from Greasy Fork](https://greasyfork.org/en/scripts/547742-youtube-channel-filter-ytcf)** (requires the [Tampermonkey](https://www.tampermonkey.net/) or Violentmonkey browser extension)
+
+[繁體中文 README →](README.md)
+
+---
+
+## 💡 Why YTcF?
+
+YouTube's algorithm often surfaces content that's irrelevant, low-quality, or repetitive. YTcF hands control back to you — beyond classic channel and keyword filtering, it adds precise per-page-type filtering rules, automatic collaboration-video splitting, and a hard-block mode, suited to everything from distraction-free browsing to family/kids-safe setups.
+
+## ✨ Key Features
+
+- **🚫 Channel blocklist / whitelist**: Match by UC ID, `@handle`, channel name, or Regex
+- **🎬 Single-video blocklist**: Block a specific video by ID without touching the rest of the channel
+- **🤝 Smart collaboration-video parsing**: Automatically splits cross-channel collab videos so you can block just one participant
+- **⭐ Whitelist-only mode**: One toggle for a minimal, trusted-channels-only, kid-friendly view
+- **🔤 Keyword groups + Regex**: Match title and/or description, with advanced regular expression support
+- **⏱️ Multi-dimensional filters**: Duration, view count, upload date, language (BCP-47), live/upcoming, members-only, fundraisers
+- **🎯 Filter Scope matrix** (advanced): 11 rule types × page types (home, subscriptions, search, watch, channel, etc.), independently toggled
+- **🛡️ Direct-access hard block**: Force-pause and overlay-block when a blocked channel/video is opened via a direct URL or external link
+- **🖱️ Quick actions**: Hover action bar, native ⋮ menu integration, global floating button
+- **🔬 Diagnostics**: Per-card lifecycle tracing and a 10,000-entry debug log ring buffer, so bug reports come with real evidence
+- **💾 Full backup/export/share**: Complete JSON backup, CSV export, one-click shareable links
+
+See the full user guide below for detailed usage.
+
+---
+
 # 🔍 YouTube Channel Filter — User Guide
 
-> Version: v1.4.0-rc17 · Tampermonkey / Violentmonkey userscript
+> Version: v1.4.7 · Tampermonkey / Violentmonkey userscript
 
 ---
 
@@ -22,14 +60,15 @@
    - [Kids Mode Setup](#kids-mode-setup)
 5. [Quick Actions](#quick-actions)
 6. [PIN Lock](#pin-lock)
-7. [Notes](#notes)
+7. [Bug Reports & Diagnostics](#bug-reports--diagnostics)
+8. [Notes](#notes)
 
 ---
 
 ## Quick Start
 
 1. Install [Tampermonkey](https://www.tampermonkey.net/) or Violentmonkey browser extension
-2. Install this userscript
+2. Install this userscript from [Greasy Fork](https://greasyfork.org/en/scripts/547742-youtube-channel-filter-ytcf)
 3. Open YouTube — a **🔍** button will appear in the top navigation bar
 4. Left-click 🔍 to open the management panel and start using
 
@@ -309,6 +348,17 @@ Enable PIN Lock in the ⚙️ Settings panel under "PIN Lock":
 
 ---
 
+## Bug Reports & Diagnostics
+
+If you run into flickering, filters not working, or delayed card updates:
+
+1. Open the management panel and switch to the User Guide tab, or use "🔬 Enable Diagnostic Mode" from the Tampermonkey extension menu
+2. Click "🪲 Start Recording Issue" and reproduce the problem
+3. Click "⏹️ Stop & Export Log" to download the diagnostic log (`ytcf-diag-xxx.log`)
+4. Open a report on [GitHub Issues](https://github.com/hubig21/YouTube-Gatekeeper/issues) and attach the log file
+
+---
+
 ## Notes
 
 - The script only filters **video cards on listing pages** — it does not affect the actual content of videos being played
@@ -316,3 +366,12 @@ Enable PIN Lock in the ⚙️ Settings panel under "PIN Lock":
 - When a channel page contains no UC ID, matching relies primarily on `@handle` and channel name
 - If a blocked channel's cards still appear, try refreshing the page or clicking "Save Settings" in the panel
 - Settings are stored in the browser's localStorage — please export a backup before clearing browser data
+
+---
+
+## 📜 License & Credits
+
+This project is licensed under the [MIT License](LICENSE).
+Author: **MayoHu** · GitHub: [YouTube-Gatekeeper](https://github.com/hubig21/YouTube-Gatekeeper)
+
+☕ If this script has been useful to you, consider supporting development via [Liberapay](https://liberapay.com/MayoHu_xu4fu/donate).
